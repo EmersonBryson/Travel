@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Dashboard</title>
+</head>
+<body class= "container-fluid bg-dark">
+    <div class="row">
+        <div class="col d-flex flex-row justify-content-between p-3 m-3 align-items-baseline">
+            <h1 class="text-light">Hello {{user.first_name}}!</h1>
+            <a href="/logout"><h5>Log Out</h5></a>
+            <form action="/jobs/new">
+            <button type="submit" class="btn btn-outline-light">New Job!</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-left">
+            <h5 class="text-light">Everyone's Jobs:</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <table class="table table-dark">
+                <thead>
+                    <tr>
+                        <th>Job</th>
+                        <th>Location</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for job in jobs %}
+                        <tr>
+                            <td>{{job.title}}</td>
+                            <td>{{job.location}}</td>
+                            <td>
+                                <a href="jobs/{{job.id}}">View</a> | 
+                                {% if user == job.user %}
+                                <a href="/jobs/{{job.id}}/destroy">Remove</a> | 
+                                <a href="/jobs/edit/{{job.id}}">Edit</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
